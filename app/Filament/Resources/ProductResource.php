@@ -6,12 +6,15 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Nette\Utils\ImageColor;
 
 class ProductResource extends Resource
 {
@@ -38,6 +41,7 @@ class ProductResource extends Resource
                 Forms\Components\TextInput::make('stock')
                     ->required()
                     ->numeric(),
+                    FileUpload::make('gambar')
             ]);
     }
 
@@ -45,6 +49,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('gambar'),
                 Tables\Columns\TextColumn::make('categories.description')
                     ->numeric()
                     ->sortable(),
