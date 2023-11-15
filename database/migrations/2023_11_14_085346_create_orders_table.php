@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class);
             $table->enum('Status Order', ['Belum Bayar','Sudah Bayar']);
             $table->integer('Quantity');
+            $table->date('order_date');
             $table->decimal('Price');
         });
     }

@@ -7,6 +7,7 @@ use App\Filament\Resources\OrdersResource\RelationManagers;
 use App\Models\Orders;
 use DateTime;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -29,14 +30,15 @@ class OrdersResource extends Resource
         return $form
             ->schema([
                 Select::make('product_id')
-                ->relationship('product','description'),
+                    ->relationship('product', 'description'),
                 Select::make('Status Order')
-                ->options([
-                    'Belum Bayar' => 'Belum Bayar',
-                    'Sudah Bayar' => 'Sudah Bayar',
-                ]),
+                    ->options([
+                        'Pesanan Custom' => 'Pesanan Custom',
+                        'Menunggu Pembayaran' => 'Menunggu Pembayaran',
+                    ]),
                 TextInput::make('Quantity'),
-                TextInput::make('Price')
+                TextInput::make('Price'),
+                DatePicker::make('order_date'), // Add this line for date input
             ]);
     }
 
@@ -48,6 +50,7 @@ class OrdersResource extends Resource
                 TextColumn::make('Status Order'),
                 TextColumn::make('Quantity'),
                 TextColumn::make('Price'),
+                TextColumn::make('order_date'), // Add this line for date column
             ])
             ->filters([
                 //
@@ -64,21 +67,20 @@ class OrdersResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListOrders::route('/'),
             'create' => Pages\CreateOrders::route('/create'),
             'edit' => Pages\EditOrders::route('/{record}/edit'),
-            
         ];
-    }    
+    }
 }
